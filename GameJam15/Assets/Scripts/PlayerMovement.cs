@@ -4,6 +4,11 @@ namespace Assets.Scripts {
     public class PlayerMovement : MonoBehaviour {
         public float MoveSpeed;
         public Rigidbody2D Rb;
+        public bool DisableMovement {
+            get => AlchemyMenu.ShowAlchemyMenu;
+            set { }
+        }
+
         private Vector2 _movement;
 
         public PlayerMovement(float moveSpeed) {
@@ -17,7 +22,9 @@ namespace Assets.Scripts {
         }
 
         private void FixedUpdate() {
-            Rb.MovePosition(Rb.position + _movement * MoveSpeed * Time.fixedDeltaTime);
+            if (!DisableMovement) {
+                Rb.MovePosition(Rb.position + _movement * MoveSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 }
