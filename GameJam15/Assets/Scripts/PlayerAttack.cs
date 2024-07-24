@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
-{
+public class PlayerAttack : MonoBehaviour {
     private int health = 100;
 
     public GameObject ball;
@@ -24,45 +23,39 @@ public class PlayerAttack : MonoBehaviour
     bool isLoading = false;
     bool isLoaded = false;
 
-    void Start()
-    {
+    void Start() {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
-    void Update()
-    {
+    void Update() {
         LookAtMouse();
         //Add double tap
-        if (Input.GetKeyDown(KeyCode.Mouse0) && timeToLoad <= 0 && isLoaded)
-        {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && timeToLoad <= 0 && isLoaded) {
             Instantiate(ball, firePoint.position, firePoint.rotation);
             timeToLoad = loadingTime;
             isLoaded = false;
 
 
         }
-        if (Input.GetKeyDown(KeyCode.R) && !isLoading && !isLoaded)
-        {
+        if (Input.GetKeyDown(KeyCode.R) && !isLoading && !isLoaded) {
             timeToLoad = loadingTime;
             isLoading = true;
 
 
         }
 
-        if (timeToLoad > 0 && isLoading)
-        {
+        if (timeToLoad > 0 && isLoading) {
 
             timeToLoad -= Time.deltaTime;
-            
-        }else if (timeToLoad <= 0)
-        {
+
+        }
+        else if (timeToLoad <= 0) {
             isLoaded = true;
             isLoading = false;
         }
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
 
         InputX = Input.GetAxisRaw("Horizontal");
         InputY = Input.GetAxisRaw("Vertical");
@@ -76,13 +69,11 @@ public class PlayerAttack : MonoBehaviour
 
 
     }
-    public void TakeDamage(int damage)
-    {
+    public void TakeDamage(int damage) {
 
         health -= damage;
 
-        if (health <= 0)
-        {
+        if (health <= 0) {
 
             Destroy(gameObject);
 
@@ -92,8 +83,7 @@ public class PlayerAttack : MonoBehaviour
 
 
 
-    void LookAtMouse()
-    {
+    void LookAtMouse() {
 
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
