@@ -9,6 +9,7 @@
 [Tt]emp/
 *[Uu]nityGenerated/
 *[Uu]serSettings/
+*UserSettings
 
 # file on crash reports
 sysinfo.txt
