@@ -24,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
     bool isLoading = false;
     bool isLoaded = false;
 
+    public LayerMask attackMask;
     void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -39,6 +40,17 @@ public class PlayerAttack : MonoBehaviour
             timeToLoad = loadingTime;
             isLoaded = false;
 
+
+        }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+
+            RaycastHit2D result = Physics2D.BoxCast(firePoint.position, new Vector2(0.75f, 0.75f), 0f, firePoint.right, 1, attackMask);
+            if(result != null && result.collider.GetComponent<Enemy>())
+            {
+
+                result.collider.GetComponent<Enemy>().TakeDamage(50, transform.position);
+            }
 
         }
         if (Input.GetKeyDown(KeyCode.R) && !isLoading && !isLoaded)

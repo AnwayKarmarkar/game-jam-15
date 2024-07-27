@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour
         if(!isEnemy && collision.GetComponent<Enemy>())
         {
 
-            collision.GetComponent<Enemy>().TakeDamage(damage);
+            collision.GetComponent<Enemy>().TakeDamage(damage, transform.position);
             Destroy(gameObject);
 
 

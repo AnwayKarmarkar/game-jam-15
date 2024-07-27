@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]  private Transform meleePoint;
     [SerializeField] private int meleeDamage = 50;
 
+    [SerializeField] private Rigidbody2D rb;
+
+
     void Start()
     {
         agent.stoppingDistance = attackingRange;
@@ -51,6 +54,8 @@ public class Enemy : MonoBehaviour
         switch (type)
         {
             case EnemyType.Melee:
+
+                if(agent.enabled)
                 Melee();
                 break;
             case EnemyType.Ranged:
@@ -81,12 +86,12 @@ public class Enemy : MonoBehaviour
 
             if (timeAttack >= attackRate)
             {
-                RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(2, 1), 0f, meleePoint.forward, 1, attackMask);
+                RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(0.75f, 0.75f), 0f, meleePoint.right, 1, attackMask);
                 if(result.collider.GetComponent<PlayerAttack>())
                 {
 
                     result.collider.GetComponent<PlayerAttack>().TakeDamage(meleeDamage);
-
+                    print("Attack");
                 }
 
                 //print(result.collider.GetComponent<PlayerAttack>());
@@ -123,7 +128,7 @@ public class Enemy : MonoBehaviour
         else
         {
          
-
+            
             agent.SetDestination(playerTarget.position);
 
         }
@@ -153,7 +158,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 pos)
     {
 
         health -= damage;
@@ -165,5 +170,17 @@ public class Enemy : MonoBehaviour
 
         }
 
+        Vector2 difference = (transform.position - pos).normalized * 1;
+        rb.velocity = difference * 5;
+        agent.enabled = false;
+        Invoke("EndKnockBack", 0.5f);
+
+
+    }
+
+    void EndKnockBack()
+    {
+        rb.velocity = Vector3.zero;
+        agent.enabled = true;
     }
 }
