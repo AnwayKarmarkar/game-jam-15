@@ -38,20 +38,14 @@ namespace Assets {
                 Instantiate(ball, firePoint.position, firePoint.rotation);
                 timeToLoad = loadingTime;
                 isLoaded = false;
-
-
             }
             if (Input.GetKeyDown(KeyCode.R) && !isLoading && !isLoaded) {
                 timeToLoad = loadingTime;
                 isLoading = true;
-
-
             }
 
             if (timeToLoad > 0 && isLoading) {
-
                 timeToLoad -= Time.deltaTime;
-
             }
             else if (timeToLoad <= 0) {
                 isLoaded = true;
@@ -60,45 +54,26 @@ namespace Assets {
         }
 
         private void FixedUpdate() {
-            if (true) {
+            if (!DisableMovement) {
+                InputX = Input.GetAxisRaw("Horizontal");
+                InputY = Input.GetAxisRaw("Vertical");
+                movement = new Vector2(InputX, InputY);
 
+                rb.velocity = movement.normalized * speed;
             }
-            InputX = Input.GetAxisRaw("Horizontal");
-            InputY = Input.GetAxisRaw("Vertical");
-            movement = new Vector2(InputX, InputY);
-
-            rb.velocity = movement.normalized * speed;
-
-
-
-
-
-
         }
         public void TakeDamage(int damage) {
-
             health -= damage;
-
             if (health <= 0) {
-
                 //Destroy(gameObject);
-
             }
-
         }
 
-
-
         void LookAtMouse() {
-
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-
             Vector3 rotation = mousePos - pivot.position;
-
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-
             pivot.rotation = Quaternion.Euler(0, 0, rotZ);
-
         }
     }
 
