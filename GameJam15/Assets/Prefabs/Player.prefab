@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FlarePrefab: {fileID: 1424638629693622183, guid: 999385a274e2f2a4d8d823391d46108e, type: 3}
-  FlareDuration: 2
+  FlareDuration: 5
 --- !u!1 &5525192419561627396
 GameObject:
   m_ObjectHideFlags: 0
