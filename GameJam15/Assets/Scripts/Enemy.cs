@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 namespace Assets {
     public class Enemy : MonoBehaviour {
         [SerializeField]
@@ -41,7 +42,10 @@ namespace Assets {
         [SerializeField] private Transform meleePoint;
         [SerializeField] private int meleeDamage = 50;
 
+        [SerializeField] private Slider healthBar;
+
         void Start() {
+            healthBar.value = health;
             agent.stoppingDistance = attackingRange;
             playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
             agent.updateRotation = false;
@@ -172,6 +176,7 @@ namespace Assets {
         public void TakeDamage(int damage) {
 
             health -= damage;
+            healthBar.value = health;
 
             if (health <= 0) {
 
