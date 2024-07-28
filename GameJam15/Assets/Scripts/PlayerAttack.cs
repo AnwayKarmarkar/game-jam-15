@@ -36,6 +36,7 @@ namespace Assets {
 
         void Update() {
             LookAtMouse();
+
             if (Input.GetKeyDown(KeyCode.E))
             {
 
@@ -74,6 +75,11 @@ namespace Assets {
                 movement = new Vector2(InputX, InputY);
 
                 rb.velocity = movement.normalized * speed;
+            }else
+            {
+
+                rb.velocity = Vector2.zero;
+
             }
         }
         public void TakeDamage(int damage) {
@@ -88,6 +94,12 @@ namespace Assets {
             Vector3 rotation = mousePos - pivot.position;
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             pivot.rotation = Quaternion.Euler(0, 0, rotZ);
+        }
+        void ControlMenu()
+        {
+
+
+
         }
     }
 
