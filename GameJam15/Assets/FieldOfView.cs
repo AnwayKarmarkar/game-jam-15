@@ -62,6 +62,11 @@ public class FieldOfView : MonoBehaviour
             {
 
                 vertex = rayCast.point;
+                if(rayCast.collider.GetComponent<Enemy>())
+                {
+
+                    print("Yo");
+                }
             }
             vertices[vertexIndex] = vertex;
 
