@@ -43,6 +43,7 @@ namespace Assets {
         [SerializeField] private int meleeDamage = 50;
 
         [SerializeField] private Slider healthBar;
+        [SerializeField] private Rigidbody2D rb;
 
         void Start() {
             healthBar.value = health;
@@ -108,7 +109,7 @@ namespace Assets {
                 timeAttack += Time.deltaTime;
 
                 if (timeAttack >= attackRate) {
-                    RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(2, 1), 0f, meleePoint.forward, 1, attackMask);
+                    RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(1, 1), 0f, meleePoint.right, 1, attackMask);
                     if (result.collider.GetComponent<PlayerAttack>()) {
 
                         result.collider.GetComponent<PlayerAttack>().TakeDamage(meleeDamage);
@@ -173,17 +174,33 @@ namespace Assets {
 
         }
 
-        public void TakeDamage(int damage) {
+        public void TakeDamage(int damage,bool isKnocked, Vector3 pos)
+        {
 
             health -= damage;
-            healthBar.value = health;
 
-            if (health <= 0) {
+            if (health <= 0)
+            {
 
                 Destroy(gameObject);
 
             }
-
+            if (isKnocked)
+            {
+                Vector2 difference = (transform.position - pos).normalized * 1;
+                rb.velocity = difference * 5;
+                agent.enabled = false;
+                Invoke("EndKnockBack", 0.3f);
+            }
+            healthBar.value = health;
         }
+
+        void EndKnockBack()
+        {
+            rb.velocity = Vector3.zero;
+            agent.enabled = true;
+        }
+
+
     }
 }

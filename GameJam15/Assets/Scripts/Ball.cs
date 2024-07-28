@@ -23,7 +23,7 @@ namespace Assets {
 
             if (!isEnemy && collision.GetComponent<Enemy>()) {
 
-                collision.GetComponent<Enemy>().TakeDamage(damage);
+                collision.GetComponent<Enemy>().TakeDamage(damage, true, transform.position);
                 Destroy(gameObject);
 
 

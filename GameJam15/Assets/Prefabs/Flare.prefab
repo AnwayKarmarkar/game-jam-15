@@ -184,7 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 64
   viewDistance: 50
   player: {fileID: 9030991253311430361}
   damageTick: 2
@@ -203,7 +203,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8972849850658103408}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

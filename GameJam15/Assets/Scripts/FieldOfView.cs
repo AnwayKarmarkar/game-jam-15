@@ -1,7 +1,4 @@
-using Assets;
-using Microsoft.Win32.SafeHandles;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
@@ -66,19 +63,13 @@ public class FieldOfView : MonoBehaviour
             else
             {
 
+                
+
                 vertex = rayCast.point;
-                if (rayCast.collider.GetComponent<Enemy>())
-                {
+                
+               
 
-                    time += Time.deltaTime; 
-                    if(time >= damageTick)
-                    {
-                        rayCast.collider.GetComponent<Enemy>().TakeDamage(5);
-
-                        time = 0f;
-
-                    }
-                }
+              
             }
             vertices[vertexIndex] = vertex;
 

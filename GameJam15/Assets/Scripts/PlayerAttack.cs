@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Scripts.Alchemy;
 namespace Assets {
     public class PlayerAttack : MonoBehaviour {
+        [SerializeField]
         private int health = 100;
 
         public GameObject ball;
@@ -23,6 +24,8 @@ namespace Assets {
         float timeToLoad;
         bool isLoading = false;
         bool isLoaded = false;
+        public LayerMask attackMask;
+
         public bool DisableMovement {
             get => AlchemyMenu.ShowAlchemyMenu;
             set { }
@@ -33,6 +36,17 @@ namespace Assets {
 
         void Update() {
             LookAtMouse();
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+
+                RaycastHit2D result = Physics2D.BoxCast(firePoint.position, new Vector2(0.75f, 0.75f), 0f, firePoint.right, 1, attackMask);
+                if (result != null && result.collider.GetComponent<Enemy>())
+                {
+
+                    result.collider.GetComponent<Enemy>().TakeDamage(25,true, transform.position);
+                }
+
+            }
             //Add double tap
             if (Input.GetKeyDown(KeyCode.Mouse0) && timeToLoad <= 0 && isLoaded) {
                 Instantiate(ball, firePoint.position, firePoint.rotation);
