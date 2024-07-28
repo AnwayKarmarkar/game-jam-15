@@ -1,4 +1,5 @@
 
+using Assets;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
@@ -66,7 +67,17 @@ public class FieldOfView : MonoBehaviour
                 
 
                 vertex = rayCast.point;
-                
+                if (rayCast.collider.GetComponent<Enemy>())
+                {
+
+                    time += Time.deltaTime;
+
+                    if (time >= damageTick)
+                    {
+                        rayCast.collider.GetComponent<Enemy>().TakeDamage(5, false, transform.position);
+                        time = 0f;
+                    }
+                }
                
 
               
