@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Assets.Scripts.Alchemy;
+<<<<<<< HEAD
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+=======
+using UnityEngine;
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
 
 namespace Assets {
     public class PlayerAttack : MonoBehaviour {
-        [SerializeField]
-        private int health = 100;
+        [SerializeField] private int _health = 100;
 
+<<<<<<< HEAD
         public GameObject ball;
         public Transform firePoint;
         private Vector2 movement;
@@ -29,6 +30,24 @@ namespace Assets {
         bool isLoaded = false;
         public LayerMask attackMask;
         public GameObject FlarePrefab;
+=======
+        public GameObject Ball;
+        public Transform FirePoint;
+        private Vector2 _movement;
+        public Rigidbody2D Rb;
+        private float _inputX;
+        private float _inputY;
+        [SerializeField] private readonly float _speed = 8;
+        private Camera _mainCam;
+        private Vector3 _mousePos;
+        [SerializeField] private Transform _pivot;
+        [SerializeField] private readonly float _loadingTime = 2f;
+
+        private float _timeToLoad;
+        private bool _isLoading;
+        private bool _isLoaded;
+        public LayerMask AttackMask;
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
 
         public int FlareDuration = 1;
         GameObject flare;
@@ -39,27 +58,30 @@ namespace Assets {
             get => AlchemyMenu.ShowAlchemyMenu;
             set { }
         }
+<<<<<<< HEAD
         void Start() {
             playerHealthBar.maxValue = health;
             playerHealthBar.value = health;
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+=======
+
+        private void Start() {
+            _mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
         }
 
-        void Update() {
+        private void Update() {
             LookAtMouse();
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-
-                RaycastHit2D result = Physics2D.BoxCast(firePoint.position, new Vector2(0.75f, 0.75f), 0f, firePoint.right, 1, attackMask);
-                if (result != null && result.collider.GetComponent<Enemy>())
-                {
-
-                    result.collider.GetComponent<Enemy>().TakeDamage(25,true, transform.position);
-                }
-
+            if (Input.GetKeyDown(KeyCode.E)) {
+                var result = Physics2D.BoxCast(FirePoint.position, new Vector2(0.75f, 0.75f), 0f, FirePoint.right, 1,
+                    AttackMask);
+                if (result.collider.GetComponent<Enemy>())
+                    result.collider.GetComponent<Enemy>().TakeDamage(25, true, transform.position);
             }
+
             //Add double tap
+<<<<<<< HEAD
             if (Input.GetKeyDown(KeyCode.Mouse0) && timeToLoad <= 0 && isLoaded) {
                 
                 GameObject bolt = Instantiate(ball, firePoint.position, firePoint.rotation);
@@ -77,46 +99,64 @@ namespace Assets {
                 timeToLoad = loadingTime;
                 
                 isLoading = true;
+=======
+            if (Input.GetKeyDown(KeyCode.Mouse0) && _timeToLoad <= 0 && _isLoaded) {
+                Instantiate(Ball, FirePoint.position, FirePoint.rotation);
+                _timeToLoad = _loadingTime;
+                _isLoaded = false;
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
             }
 
-            if (timeToLoad > 0 && isLoading) {
-                timeToLoad -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.R) && !_isLoading && !_isLoaded) {
+                _timeToLoad = _loadingTime;
+                _isLoading = true;
             }
-            else if (timeToLoad <= 0) {
-                isLoaded = true;
-                isLoading = false;
+
+            switch (_timeToLoad) {
+                case > 0 when _isLoading:
+                    _timeToLoad -= Time.deltaTime;
+                    break;
+                case <= 0:
+                    _isLoaded = true;
+                    _isLoading = false;
+                    break;
             }
         }
 
         private void FixedUpdate() {
             if (!DisableMovement) {
-                InputX = Input.GetAxisRaw("Horizontal");
-                InputY = Input.GetAxisRaw("Vertical");
-                movement = new Vector2(InputX, InputY);
+                _inputX = Input.GetAxisRaw("Horizontal");
+                _inputY = Input.GetAxisRaw("Vertical");
+                _movement = new Vector2(_inputX, _inputY);
 
-                rb.velocity = movement.normalized * speed;
-            }else
-            {
-
-                rb.velocity = Vector2.zero;
-
+                Rb.velocity = _movement.normalized * _speed;
+            }
+            else {
+                Rb.velocity = Vector2.zero;
             }
         }
+
         public void TakeDamage(int damage) {
+<<<<<<< HEAD
             health -= damage;
             playerHealthBar.value = health;
 
             if (health <= 0) {
+=======
+            _health -= damage;
+            if (_health <= 0) {
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
                 //Destroy(gameObject);
             }
         }
 
-        void LookAtMouse() {
-            mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 rotation = mousePos - pivot.position;
-            float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-            pivot.rotation = Quaternion.Euler(0, 0, rotZ);
+        private void LookAtMouse() {
+            _mousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+            var rotation = _mousePos - _pivot.position;
+            var rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+            _pivot.rotation = Quaternion.Euler(0, 0, rotZ);
         }
+<<<<<<< HEAD
         public void CreateFlare(GameManager.Compound compound)
         {
 
@@ -148,3 +188,9 @@ namespace Assets {
      
     
 }
+=======
+
+        private void ControlMenu() { }
+    }
+}
+>>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
