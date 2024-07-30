@@ -141,7 +141,20 @@ namespace Assets
 
 
                     break;
+                case "CuSO4":
+                    tagName = "GreenFlare";
+                    flare.GetComponentInChildren<FieldOfView>().SetLightId(2);
+                    break;
+                case "CuCl2":
+                    tagName = "BlueFlare";
+                    flare.GetComponentInChildren<FieldOfView>().SetLightId(3);
+                    break;
+                case "KNO3KSO4":
+                    tagName = "VioletFlare";
+                    flare.GetComponentInChildren<FieldOfView>().SetLightId(4);
+                    break;
             }
+
             flare.tag = tagName;
 
             var light = flare.GetComponent<Light2D>();

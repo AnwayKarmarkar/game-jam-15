@@ -50,6 +50,7 @@ namespace Assets {
         public bool isMarked = false;
         private int markDamage = 0;
         private int weaknessId;
+        [SerializeField] private GameObject MarkVisual;
 
         void Start() {
             spriteRenderer = GetComponent<SpriteRenderer>();    
@@ -65,21 +66,27 @@ namespace Assets {
             {
                 case LightWeakness.Red:
                     weaknessId = 0;
+                    spriteRenderer.color = Color.red;
+
                     break;
                 case LightWeakness.Yellow:
                     weaknessId = 1;
+                    spriteRenderer.color = Color.yellow;
 
                     break;
                 case LightWeakness.Green:
                     weaknessId = 2;
+                    spriteRenderer.color = Color.green;
 
                     break;
                 case LightWeakness.Blue:
                     weaknessId = 3;
+                    spriteRenderer.color = Color.blue;
 
                     break;
                 case LightWeakness.Violet:
                     weaknessId = 4;
+                    spriteRenderer.color = Color.magenta;
 
                     break;
             }
@@ -109,6 +116,7 @@ namespace Assets {
                     isMarked = false;
                 barObject.SetActive(false);
                 spriteRenderer.enabled = false;
+                MarkVisual.SetActive(false);
 
             }
         }
@@ -212,6 +220,8 @@ namespace Assets {
             if(isMarked)
             {
                 health -= markDamage;
+                MarkVisual.SetActive(false);
+
                 isMarked = false;   
 
 
@@ -263,7 +273,15 @@ namespace Assets {
             {
 
                 markDamage = damage;
+                MarkVisual.SetActive(true);
                 isMarked = true;
+            }
+            else if(lightId != weaknessId)
+            {
+
+                markDamage = 0;
+                MarkVisual.SetActive(false);
+                isMarked = false;
             }
 
         }
