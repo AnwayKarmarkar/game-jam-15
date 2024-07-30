@@ -20,9 +20,9 @@ namespace Assets
         private Vector3 _mousePos;
         [SerializeField] private Transform _pivot;
         [SerializeField] private readonly float _loadingTime = 2f;
-        [SerializeField]private float _timeToLoad;
+        [SerializeField] private float _timeToLoad;
         [SerializeField] private bool _isLoading = false;
-        [SerializeField] private bool _isLoaded = false;
+        private bool _isLoaded = false;
         public LayerMask AttackMask;
 
         public int FlareDuration = 1;
