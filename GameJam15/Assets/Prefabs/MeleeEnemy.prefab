@@ -588,6 +588,10 @@ MonoBehaviour:
   meleeDamage: 50
   healthBar: {fileID: 2831071768899644701}
   rb: {fileID: 6034540717053715537}
+  spriteRenderer: {fileID: 7678476515069877981}
+  barObject: {fileID: 5116244555308777045}
+  visibleTime: 0
+  isMarked: 0
 --- !u!58 &2530178392506059610
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -729,7 +733,7 @@ MonoBehaviour:
   - {x: -0.14887166, y: -0.47336352, z: 0}
   m_ShapePathHash: 1828438035
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1362
+  m_InstanceId: 75314
   m_LocalBounds:
     m_Center: {x: 0.0060021877, y: 0.02407515, z: 0}
     m_Extent: {x: 0.5039536, y: 0.5061656, z: 0}

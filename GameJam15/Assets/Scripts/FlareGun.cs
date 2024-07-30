@@ -16,7 +16,6 @@ public class FlareGun : MonoBehaviour {
     }
 
     public void CreateFlare(GameManager.Compound compound) {
-<<<<<<< HEAD
         string tagName = "";
         switch (compound.Name) {
             case "NaCl":
@@ -27,8 +26,7 @@ public class FlareGun : MonoBehaviour {
                 break;
         }
         var flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation, transform);
-=======
-        var tagName = compound.Name switch {
+        tagName = compound.Name switch {
             "NaCl" => "YellowFlare",
             "Sr(NO3)2" => "RedFlare",
             "CuSO4" => "GreenFlare",
@@ -36,8 +34,7 @@ public class FlareGun : MonoBehaviour {
             "KNO3KSO4" => "VioletFlare",
             _ => ""
         };
-        var flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation);
->>>>>>> 0879f2e6ab6b5671717625d42c2400c7862ba728
+        flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation);
         flare.tag = tagName;
         Destroy(flare, FlareDuration);
         var light = flare.GetComponent<Light2D>();

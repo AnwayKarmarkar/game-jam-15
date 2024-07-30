@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 6123382608424744382}
   - component: {fileID: 2996378018888741159}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,12 +350,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c06d37e335bd0245aba3706cce85a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   ball: {fileID: 3586236845992983795, guid: 2bf3096050b983d489ccd1603a1f00d3, type: 3}
   firePoint: {fileID: 6123382608424744382}
   rb: {fileID: 8930009095203708050}
-  speed: 4
-  pivot: {fileID: 7326599980290787698}
-  loadingTime: 1
+  FlarePrefab: {fileID: 1424638629693622183, guid: 999385a274e2f2a4d8d823391d46108e, type: 3}
+  Ball: {fileID: 3586236845992983795, guid: 2bf3096050b983d489ccd1603a1f00d3, type: 3}
+  FirePoint: {fileID: 6123382608424744382}
+  Rb: {fileID: 8930009095203708050}
+  _pivot: {fileID: 7326599980290787698}
+  AttackMask:
+    serializedVersion: 2
+    m_Bits: 64
+  FlareDuration: 1
 --- !u!50 &8930009095203708050
 Rigidbody2D:
   serializedVersion: 4
@@ -492,4 +499,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5d7edf218ae0546ae540ee64beca4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlareGun: {fileID: 0}
+  FlareGun: {fileID: 6433722653139283564}

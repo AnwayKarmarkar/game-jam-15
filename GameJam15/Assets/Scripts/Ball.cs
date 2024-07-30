@@ -11,6 +11,7 @@ namespace Assets {
         private float speed = 2;
         [SerializeField]
         private float aliveTime = 4;
+        bool once = false;
         void Start() {
             Destroy(gameObject, aliveTime);
             rb.AddForce(transform.right * speed);
@@ -23,7 +24,11 @@ namespace Assets {
 
             if (!isEnemy && collision.GetComponent<Enemy>()) {
 
-                collision.GetComponent<Enemy>().TakeDamage(damage, true, transform.position);
+                if (!once)
+                {
+                    collision.GetComponent<Enemy>().TakeDamage(damage, true, transform.position);
+                    once = true;
+                }
                 rb.velocity = Vector3.zero;
 
             }

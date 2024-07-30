@@ -60,19 +60,9 @@ namespace Assets {
             agent.updateUpAxis = false;
             agent.SetDestination(playerTarget.position);
 
-        }
 
-        void Update() {
-            switch (type) {
-                case EnemyType.Melee:
-                    Melee();
-                    break;
-                case EnemyType.Ranged:
-                    Ranged();
-                    break;
-            }
-
-            switch (weakness) {
+            switch (weakness)
+            {
                 case LightWeakness.Red:
                     weaknessId = 0;
                     break;
@@ -94,6 +84,20 @@ namespace Assets {
                     break;
             }
 
+        }
+
+        void Update() {
+            switch (type) {
+                case EnemyType.Melee:
+                    Melee();
+                    break;
+                case EnemyType.Ranged:
+                    Ranged();
+                    break;
+            }
+
+          
+
 
             if(visibleTime > 0)
             {
@@ -101,6 +105,8 @@ namespace Assets {
                
             }else
             {
+                if (isMarked)
+                    isMarked = false;
                 barObject.SetActive(false);
                 spriteRenderer.enabled = false;
 
@@ -133,7 +139,7 @@ namespace Assets {
 
                 if (timeAttack >= attackRate) {
                     RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(1, 1), 0f, meleePoint.right, 1, attackMask);
-                    if (result.collider.GetComponent<PlayerAttack>()) {
+                    if (result.collider.GetComponent<PlayerAttack>() != null) {
 
                         result.collider.GetComponent<PlayerAttack>().TakeDamage(meleeDamage);
 
@@ -236,6 +242,7 @@ namespace Assets {
         {
             barObject.SetActive(true);
             spriteRenderer.enabled = true;
+           
             visibleTime = 0.25f;
 
 
@@ -243,9 +250,9 @@ namespace Assets {
         public void SetMark(int damage, int lightId)
         {
 
-
             if (lightId == weaknessId)
             {
+
                 markDamage = damage;
                 isMarked = true;
             }
