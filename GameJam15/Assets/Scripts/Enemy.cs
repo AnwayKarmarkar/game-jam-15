@@ -217,7 +217,6 @@ namespace Assets {
             
 
             health -= damage;
-            healthBar.value = health;
 
             if (isMarked)
             {
@@ -242,6 +241,8 @@ namespace Assets {
 
                 Invoke("EndKnockBack", 0.3f);
             }
+            healthBar.value = health;
+
         }
 
         void EndKnockBack()

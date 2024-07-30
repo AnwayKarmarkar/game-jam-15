@@ -29,6 +29,7 @@ namespace Assets
         GameObject flare;
         float meleeTime;
         [SerializeField] private float meleeCoolDown = 1;
+        [SerializeField] private int meleeDamage = 20;
 
         public bool DisableMovement
         {
@@ -49,7 +50,7 @@ namespace Assets
                 var result = Physics2D.BoxCast(FirePoint.position, new Vector2(0.75f, 0.75f), 0f, FirePoint.right, 1,
                     AttackMask);
                 if (result.collider.GetComponent<Enemy>())
-                    result.collider.GetComponent<Enemy>().TakeDamage(25, true, transform.position);
+                    result.collider.GetComponent<Enemy>().TakeDamage(meleeDamage, true, transform.position);
                 meleeTime = meleeCoolDown;
             }
 
