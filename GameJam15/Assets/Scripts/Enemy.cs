@@ -125,7 +125,7 @@ namespace Assets {
             }
         }*/
         void Melee() {
-            agent.SetDestination(playerTarget.position);
+            agent.SetDestination(playerTarget.position);    
 
             Vector3 rotation = playerTarget.position - transform.position;
 
