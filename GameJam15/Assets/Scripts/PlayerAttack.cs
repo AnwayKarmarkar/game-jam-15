@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Alchemy;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
+
 namespace Assets {
     public class PlayerAttack : MonoBehaviour {
         [SerializeField]
@@ -25,12 +28,20 @@ namespace Assets {
         bool isLoading = false;
         bool isLoaded = false;
         public LayerMask attackMask;
+        public GameObject FlarePrefab;
 
+        public int FlareDuration = 1;
+        GameObject flare;
+
+
+        [SerializeField] private Slider playerHealthBar;
         public bool DisableMovement {
             get => AlchemyMenu.ShowAlchemyMenu;
             set { }
         }
         void Start() {
+            playerHealthBar.maxValue = health;
+            playerHealthBar.value = health;
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
 
@@ -50,12 +61,21 @@ namespace Assets {
             }
             //Add double tap
             if (Input.GetKeyDown(KeyCode.Mouse0) && timeToLoad <= 0 && isLoaded) {
-                Instantiate(ball, firePoint.position, firePoint.rotation);
+                
+                GameObject bolt = Instantiate(ball, firePoint.position, firePoint.rotation);
+                if(flare != null)
+                {
+                    flare.transform.SetParent(bolt.transform);
+                    flare.transform.localPosition = Vector3.zero;
+
+                }
                 timeToLoad = loadingTime;
+                
                 isLoaded = false;
             }
             if (Input.GetKeyDown(KeyCode.R) && !isLoading && !isLoaded) {
                 timeToLoad = loadingTime;
+                
                 isLoading = true;
             }
 
@@ -84,6 +104,8 @@ namespace Assets {
         }
         public void TakeDamage(int damage) {
             health -= damage;
+            playerHealthBar.value = health;
+
             if (health <= 0) {
                 //Destroy(gameObject);
             }
@@ -95,12 +117,34 @@ namespace Assets {
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             pivot.rotation = Quaternion.Euler(0, 0, rotZ);
         }
-        void ControlMenu()
+        public void CreateFlare(GameManager.Compound compound)
         {
 
+            string tagName = "";
+            flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation, transform);
+
+            switch (compound.Name)
+            {
+                case "NaCl":
+                    tagName = "YellowFlare";
+                    flare.GetComponentInChildren<FieldOfView>().SetLightId(1);
+
+                    break;
+                case "Sr(NO3)2":
+                    tagName = "RedFlare";
+                    flare.GetComponentInChildren<FieldOfView>().SetLightId(0);
 
 
+                    break;
+            }
+            flare.tag = tagName;
+
+            var light = flare.GetComponent<Light2D>();
+            light.enabled = true;
+            light.color = compound.Color;
         }
     }
 
+     
+    
 }

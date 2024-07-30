@@ -24,10 +24,17 @@ namespace Assets {
             if (!isEnemy && collision.GetComponent<Enemy>()) {
 
                 collision.GetComponent<Enemy>().TakeDamage(damage, true, transform.position);
-                Destroy(gameObject);
-
+                rb.velocity = Vector3.zero;
 
             }
+            if (collision.gameObject.layer == 8)
+            {
+
+
+                rb.velocity = Vector3.zero;
+
+            }
+
             if (isEnemy && collision.GetComponent<PlayerAttack>()) {
 
                 collision.GetComponent<PlayerAttack>().TakeDamage(damage);

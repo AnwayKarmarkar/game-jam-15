@@ -21,17 +21,26 @@ public class FieldOfView : MonoBehaviour
     public Transform player;
     float time;
     public float damageTick = 2f;
+    public int lightId;
+
+  
     private void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        origin = Vector3.zero;
+        
         fov = 360;
 
 
 
 
 
+
+    }
+    public void SetLightId(int num)
+    {
+
+        lightId = num;
 
     }
     private void Update()
@@ -69,12 +78,14 @@ public class FieldOfView : MonoBehaviour
                 vertex = rayCast.point;
                 if (rayCast.collider.GetComponent<Enemy>())
                 {
+                    rayCast.collider.GetComponent<Enemy>().SetVisibility();
+                    rayCast.collider.GetComponent<Enemy>().SetMark(100, lightId);
 
                     time += Time.deltaTime;
 
                     if (time >= damageTick)
                     {
-                        rayCast.collider.GetComponent<Enemy>().TakeDamage(5, false, transform.position);
+                       // rayCast.collider.GetComponent<Enemy>().TakeDamage(5, false, transform.position);
                         time = 0f;
                     }
                 }

@@ -44,8 +44,15 @@ namespace Assets {
 
         [SerializeField] private Slider healthBar;
         [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private GameObject barObject;
+        public float visibleTime;
+        public bool isMarked = false;
+        private int markDamage = 0;
+        private int weaknessId;
 
         void Start() {
+            spriteRenderer = GetComponent<SpriteRenderer>();    
             healthBar.value = health;
             agent.stoppingDistance = attackingRange;
             playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
@@ -67,24 +74,40 @@ namespace Assets {
 
             switch (weakness) {
                 case LightWeakness.Red:
-                    SearchForLight("RedFlare");
+                    weaknessId = 0;
                     break;
                 case LightWeakness.Yellow:
-                    SearchForLight("YellowFlare");
+                    weaknessId = 1;
+
                     break;
                 case LightWeakness.Green:
-                    SearchForLight("GreenFlare");
+                    weaknessId = 2;
+
                     break;
                 case LightWeakness.Blue:
-                    SearchForLight("BlueFlare");
+                    weaknessId = 3;
+
                     break;
                 case LightWeakness.Violet:
-                    SearchForLight("VioletFlare");
+                    weaknessId = 4;
+
                     break;
+            }
+
+
+            if(visibleTime > 0)
+            {
+                visibleTime -= Time.deltaTime;
+               
+            }else
+            {
+                barObject.SetActive(false);
+                spriteRenderer.enabled = false;
+
             }
         }
 
-        void SearchForLight(string tagName) {
+/*        void SearchForLight(string tagName) {
             GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tagName);
 
             foreach (GameObject obj in taggedObjects) {
@@ -94,7 +117,7 @@ namespace Assets {
                     Debug.Log($"GameObject '{obj.name}' with tag '{tagName}' is within {checkDistance} units.");
                 }
             }
-        }
+        }*/
         void Melee() {
             agent.SetDestination(playerTarget.position);
 
@@ -177,8 +200,16 @@ namespace Assets {
         public void TakeDamage(int damage,bool isKnocked, Vector3 pos)
         {
 
-            health -= damage;
+            
 
+            health -= damage;
+            if(isMarked)
+            {
+                health -= markDamage;
+                isMarked = false;   
+
+
+            }
             if (health <= 0)
             {
 
@@ -201,6 +232,27 @@ namespace Assets {
             agent.enabled = true;
         }
 
+        public void SetVisibility()
+        {
+            barObject.SetActive(true);
+            spriteRenderer.enabled = true;
+            visibleTime = 0.25f;
+
+
+        }
+        public void SetMark(int damage, int lightId)
+        {
+
+
+            if (lightId == weaknessId)
+            {
+                markDamage = damage;
+                isMarked = true;
+            }
+
+        }
 
     }
+
+   
 }

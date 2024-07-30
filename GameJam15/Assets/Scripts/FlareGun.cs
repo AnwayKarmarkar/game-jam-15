@@ -9,12 +9,8 @@ public class FlareGun : MonoBehaviour {
 
     public int FlareDuration = 1;
 
-    // Start is called before the first frame update
-    void Start() {
+  
 
-    }
-
-    // Update is called once per frame
     void Update() {
 
     }
@@ -29,11 +25,12 @@ public class FlareGun : MonoBehaviour {
                 tagName = "RedFlare";
                 break;
         }
-        var flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation);
+        var flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation, transform);
         flare.tag = tagName;
         Destroy(flare, FlareDuration);
         var light = flare.GetComponent<Light2D>();
         light.enabled = true;
         light.color = compound.Color;
     }
+
 }
