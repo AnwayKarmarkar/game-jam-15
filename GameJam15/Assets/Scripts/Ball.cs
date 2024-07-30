@@ -37,6 +37,7 @@ namespace Assets {
 
 
                 rb.velocity = Vector3.zero;
+                once = true;
 
             }
 

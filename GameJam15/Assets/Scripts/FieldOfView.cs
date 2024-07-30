@@ -80,14 +80,14 @@ public class FieldOfView : MonoBehaviour
                 {
                     rayCast.collider.GetComponent<Enemy>().SetVisibility();
                     rayCast.collider.GetComponent<Enemy>().SetMark(20, lightId);
-
+/*
                     time += Time.deltaTime;
 
                     if (time >= damageTick)
                     {
-                       // rayCast.collider.GetComponent<Enemy>().TakeDamage(5, false, transform.position);
+                       rayCast.collider.GetComponent<Enemy>().TakeDamage(5, false, transform.position);
                         time = 0f;
-                    }
+                    }*/
                 }
                
 

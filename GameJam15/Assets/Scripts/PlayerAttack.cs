@@ -16,7 +16,7 @@ namespace Assets
         public Rigidbody2D Rb;
         private float _inputX;
         private float _inputY;
-        [SerializeField] private readonly float _speed = 8;
+        [SerializeField] private float _speed = 4;
         private Vector3 _mousePos;
         [SerializeField] private Transform _pivot;
         [SerializeField] private readonly float _loadingTime = 2f;
@@ -27,7 +27,8 @@ namespace Assets
 
         public int FlareDuration = 1;
         GameObject flare;
-
+        float meleeTime;
+        [SerializeField] private float meleeCoolDown = 1;
 
         public bool DisableMovement
         {
@@ -43,12 +44,20 @@ namespace Assets
         {
             LookAtMouse();
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && meleeTime <= 0)
             {
                 var result = Physics2D.BoxCast(FirePoint.position, new Vector2(0.75f, 0.75f), 0f, FirePoint.right, 1,
                     AttackMask);
                 if (result.collider.GetComponent<Enemy>())
                     result.collider.GetComponent<Enemy>().TakeDamage(25, true, transform.position);
+                meleeTime = meleeCoolDown;
+            }
+
+            if(meleeCoolDown > 0)
+            {
+
+                meleeTime -= Time.deltaTime;
+
             }
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && _timeToLoad <= 0 && _isLoaded)
@@ -58,7 +67,7 @@ namespace Assets
                 {
                     flare.transform.SetParent(bolt.transform);
                     flare.transform.localPosition = Vector3.zero;
-
+                    flare = null;
                 }
                 _timeToLoad = _loadingTime;
 

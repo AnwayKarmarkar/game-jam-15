@@ -147,7 +147,7 @@ namespace Assets {
 
                 if (timeAttack >= attackRate) {
                     RaycastHit2D result = Physics2D.BoxCast(meleePoint.position, new Vector2(1, 1), 0f, meleePoint.right, 1, attackMask);
-                    if (result.collider.GetComponent<PlayerAttack>() != null) {
+                    if (result.collider &&result.collider.GetComponent<PlayerAttack>() != null) {
 
                         result.collider.GetComponent<PlayerAttack>().TakeDamage(meleeDamage);
 
@@ -217,7 +217,9 @@ namespace Assets {
             
 
             health -= damage;
-            if(isMarked)
+            healthBar.value = health;
+
+            if (isMarked)
             {
                 health -= markDamage;
                 MarkVisual.SetActive(false);
@@ -240,7 +242,6 @@ namespace Assets {
 
                 Invoke("EndKnockBack", 0.3f);
             }
-            healthBar.value = health;
         }
 
         void EndKnockBack()
