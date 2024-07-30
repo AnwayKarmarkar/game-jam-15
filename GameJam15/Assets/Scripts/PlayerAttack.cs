@@ -121,6 +121,11 @@ namespace Assets
         {
 
             string tagName = "";
+            if(flare)
+            {
+                Destroy(flare);
+
+            }
             flare = Instantiate(FlarePrefab, this.transform.position, this.transform.rotation, transform);
 
             switch (compound.Name)

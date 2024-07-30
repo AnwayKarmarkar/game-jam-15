@@ -226,7 +226,8 @@ namespace Assets {
             {
                 Vector2 difference = (transform.position - pos).normalized * 1;
                 rb.velocity = difference * 5;
-                agent.enabled = false;
+            agent.SetDestination(transform.position);
+
                 Invoke("EndKnockBack", 0.3f);
             }
             healthBar.value = health;
@@ -235,9 +236,17 @@ namespace Assets {
         void EndKnockBack()
         {
             rb.velocity = Vector3.zero;
-            agent.enabled = true;
+                
+            Invoke("SetAgent", 0.3f);
+
         }
 
+        void SetAgent()
+        {
+
+            agent.SetDestination(playerTarget.position);
+
+        }
         public void SetVisibility()
         {
             barObject.SetActive(true);
